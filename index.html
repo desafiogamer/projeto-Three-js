@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>three.js webgl - animation - skinning</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+	<ul class="icones">
+		<li style="--clr:#ffffff">	
+			<a href="#" target="_blank">	
+				<i class="bi bi-house-door"></i>
+				<span>Home</span>	
+			</a>		
+		</li>
+		<li style="--clr:#ffffff">
+			<a href="#" target="_blank">
+				<i class="bi bi-envelope"></i>
+				<span>Sobre</span>
+			</a>
+		</li>
+		<li style="--clr:#ffffff">
+			<a href="#" target="_blank">
+				<i class="bi bi-info-circle"></i>
+				<span>Ajuda</span>
+			</a>
+		</li>
+	</ul>
+	<section id="inicio">
+		<div class="ilumi-content">
+			<div class="iluminacao"></div>
+		</div>
+	</section>
+    <script type="importmap">
+			{
+				"imports": {
+					"three": "../build/three.module.js",
+					"three/addons/": "./jsm/"
+				}
+			}
+		</script>
+
+    <script src="./script.js" type="module"></script>
+
+</body>
+
+</html>

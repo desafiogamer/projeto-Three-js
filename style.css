@@ -1,0 +1,135 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --text-color: #ededed;
+    --main-second-color: #1E90FF;
+    --bg: #000000;
+}
+
+canvas {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+}
+
+section {
+    min-height: 100vh;
+}
+
+.icones {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.icones li {
+    position: relative;
+    list-style: none;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.icones li::before {
+    content: "";
+    position: absolute;
+    inset: 30px;
+    box-shadow: 0 0 0 10px var(--clr),
+        0 0 0 20px var(--bg),
+        0 0 0 22px var(--clr);
+    transition: .5s;
+}
+
+.icones li:hover::before {
+    inset: 15px;
+}
+
+.icones li::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    transform: rotate(45deg);
+    transition: .5s;
+}
+
+.icones li:hover::after {
+    inset: -10px;
+    transform: rotate(0deg);
+}
+
+.icones li a {
+    position: relative;
+    text-decoration: none;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icones li a i {
+    font-size: 2em;
+    transition: .5s;
+    color: var(--clr);
+}
+
+.icones li:hover a i {
+    color: var(--clr);
+    transform: translateY(-40%);
+}
+
+.icones li a span {
+    position: absolute;
+    color: var(--clr);
+    opacity: 0;
+    transition: .5s;
+    transform: scale(0) translateY(200%);
+}
+
+.icones li:hover a span {
+    opacity: 1;
+    transform: scale(1) translateY(100%);
+}
+
+.icones li:hover a i,
+.icones li:hover a span {
+    filter: drop-shadow(0 0 20px var(--clr)) drop-shadow(0 0 40px var(--clr)) drop-shadow(0 0 60px var(--clr));
+}
+
+#inicio{
+    overflow: auto;
+}
+
+.ilumi-content{
+    position: absolute;
+    display: flex;
+    justify-content: end;
+    right: 0;
+    top: 0;
+    height: 100dvh;
+    width: 420px;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.iluminacao{
+    height: 100%;
+    width: 120px;
+    background: linear-gradient(to left, var(--main-second-color), transparent);
+    filter: blur(20px);
+    transform: perspective(64px) scale(2);
+    opacity: 0, 7
+}
