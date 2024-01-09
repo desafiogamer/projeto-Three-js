@@ -7,6 +7,10 @@
     scroll-behavior: smooth;
 }
 
+body{
+    overflow-x: hidden;
+}
+
 :root {
     --text-color: #ededed;
     --main-second-color: #1E90FF;
@@ -15,7 +19,6 @@
 
 canvas {
     position: absolute;
-    width: 100%;
     height: 100vh;
     pointer-events: none;
 }
@@ -24,15 +27,21 @@ section {
     min-height: 100vh;
 }
 
-.icones {
+.menu{
     position: fixed;
-    top: 20px;
-    left: 10px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    z-index: 999;
+}
+
+.icones {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    margin-left: 20px;
 }
 
 .icones li {
@@ -48,25 +57,11 @@ section {
     margin-bottom: 20px;
 }
 
-.icones li::before {
-    content: "";
-    position: absolute;
-    inset: 30px;
-    box-shadow: 0 0 0 10px var(--clr),
-        0 0 0 20px var(--bg),
-        0 0 0 22px var(--clr);
-    transition: .5s;
-}
-
-.icones li:hover::before {
-    inset: 15px;
-}
-
 .icones li::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: #002142;
+    background: transparent;
     transform: rotate(0deg);
     transition: .5s;
 }
@@ -109,10 +104,6 @@ section {
     transform: scale(1) translateY(100%);
 }
 
-#inicio{
-    overflow: auto;
-}
-
 .ilumi-content{
     position: absolute;
     display: flex;
@@ -147,3 +138,10 @@ section {
     margin-left: 100px;
     font-family: 'Inter', sans-serif;
 }
+
+.produtos{
+    overflow-x: hidden;
+    background: linear-gradient(#002142, black);
+    width: 100%;
+}
+
