@@ -116,6 +116,37 @@ section {
     overflow: hidden;
 }
 
+.car-shop{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    z-index: 20;
+    right: 40px;
+    background: #5f003b;
+    border-radius: 50%;
+    top: 20px;
+}
+
+.car-shop i{
+    color: white;
+    font-size: 30px;
+}
+
+.car-shop span{
+    top: 0;
+    right: 0;
+    position: absolute;
+    color: white;
+    background: #5f003b;
+    box-shadow: 0 0 10px #ffffff4d;
+    border-radius: 50%;
+    padding: 3px;
+    font-size: 15px;
+}
+
 .iluminacao{
     height: 100%;
     width: 120px;
@@ -127,6 +158,10 @@ section {
 
 .content{
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 230px 0 180px;
     z-index: 10;
     width: 100%;
     height: 100%;
@@ -135,8 +170,13 @@ section {
 .content h1{
     color: white;
     font-size: 50px;
-    margin-left: 100px;
     font-family: 'Inter', sans-serif;
+    margin-bottom: 10px;
+}
+
+.content p{
+    color: white;
+    font-size: 17px;
 }
 
 .produtos{
@@ -144,4 +184,3 @@ section {
     background: linear-gradient(#002142, black);
     width: 100%;
 }
-
