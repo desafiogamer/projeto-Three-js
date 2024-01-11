@@ -42,6 +42,9 @@ section {
     justify-content: center;
     align-items: center;
     margin-left: 20px;
+    background: transparent;
+    backdrop-filter: blur(30px);
+    border-radius: 70px;
 }
 
 .icones li {
@@ -80,14 +83,25 @@ section {
     align-items: center;
 }
 
+.icones li a.ativo i{
+    color: white;
+    transform: translateY(-40%);
+}
+
+.icones li a.ativo span {
+    color: white;
+    transform: scale(1) translateY(100%);
+    opacity: 1;
+}
+
 .icones li a i {
     font-size: 2em;
     transition: .5s;
-    color: var(--clr);
+    color: #ffffff8a;
 }
 
 .icones li:hover a i {
-    color: var(--clr);
+    color: white;
     transform: translateY(-40%);
 }
 
@@ -104,16 +118,20 @@ section {
     transform: scale(1) translateY(100%);
 }
 
-.ilumi-content{
-    position: absolute;
-    display: flex;
-    justify-content: end;
-    right: 0;
-    top: 0;
-    height: 100dvh;
-    width: 420px;
-    z-index: 10;
-    overflow: hidden;
+#inicio{
+    pointer-events: none;
+}
+
+.icon{
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    z-index: 30;
+}
+
+.icon i{
+    color: white;
+    font-size: 40px;
 }
 
 .car-shop{
@@ -121,39 +139,30 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60px;
-    height: 60px;
-    z-index: 20;
+    width: 40px;
+    height: 40px;
+    z-index: 80;
     right: 40px;
-    background: #5f003b;
+    background: #fff;
     border-radius: 50%;
+    box-shadow: 0 0 10px black;
     top: 20px;
+    cursor: pointer;
 }
 
 .car-shop i{
-    color: white;
-    font-size: 30px;
+    color: black;
+    font-size: 20px;
 }
 
 .car-shop span{
-    top: 0;
-    right: 0;
+    top: -8px;
+    right: -8px;
     position: absolute;
-    color: white;
-    background: #5f003b;
-    box-shadow: 0 0 10px #ffffff4d;
+    color: #00ff62;
     border-radius: 50%;
     padding: 3px;
     font-size: 15px;
-}
-
-.iluminacao{
-    height: 100%;
-    width: 120px;
-    background: linear-gradient(to left, var(--main-second-color), transparent);
-    filter: blur(20px);
-    transform: perspective(64px) scale(2);
-    opacity: 0, 7
 }
 
 .content{
@@ -169,18 +178,251 @@ section {
 
 .content h1{
     color: white;
-    font-size: 50px;
+    font-size: 70px;
     font-family: 'Inter', sans-serif;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .content p{
-    color: white;
+    color: #ffffff9f;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.content h1 span{
+    font-size: 30px;
+    color: #0f0;
+    animation: animateHeader 3s linear infinite;
+}
+
+#iphones {
+    padding-bottom: 80px;
+}
+
+#apple {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-left: 100px;
+}
+
+#item-card {
+    position: relative;
+    margin: 70px auto;
+}
+
+#item-card img {
+    width: 300px;
+    height: 250px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+#item-name {
+    position: absolute;
+    color: #0f0f0f;
+    top: -54px;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: white;
+    font-size: 27px;
+    font-weight: bold;
+    border-radius: 10px;
+    z-index: 1;
+    padding-left: 5px;
+    padding-top: 10px;
+}
+
+#item-price {
+    position: absolute;
+    color: #0f0f0f;
+    bottom: -40px;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: white;
     font-size: 17px;
+    border-radius: 10px;
+    z-index: 1;
+    padding-left: 5px;
+    padding-top: 35px;
+}
+
+#card-top {
+    position: absolute;
+    bottom: -26px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 20;
+}
+
+#card-top button {
+    background: #0084ff;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 20px;
+    transition: .3s;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+#card-top button:hover {
+    background: #050505;
+    color: #fff;
+}
+
+#card-top button.ativo{
+    background: #050505;
+    color: #fff;
+}
+
+.Comprados{
+    position: fixed;
+    background: #818181;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 0px;
+    z-index: 70;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: .5s;
+}
+
+.Comprados.ativo{
+    width: 500px;
+}
+
+#table-body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.lista{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+.lista img{
+    width: 100px;
+    border-radius: 10px;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.lista .listaNome{
+    color: black;
+    font-size: 20px;
+    margin-right: 30px;
+}
+
+.lista .btns{
+    margin-right: 30px;
+    font-size: 20px;
+}
+
+.decrease-item, .increase-item{
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    padding: 2px;
+    border: none;
+    cursor: pointer;
+    background: white;
+    color: black;
+    transition: .4s;
+}
+
+.decrease-item:hover,
+.increase-item:hover {
+    background: black;
+    color: white;
+}
+
+.lista .btns span{
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .produtos{
+    position: relative;
     overflow-x: hidden;
-    background: linear-gradient(#002142, black);
     width: 100%;
+}
+
+#link1{
+    opacity: 0;
+    margin-left: 100px;
+}
+#link2 {
+    opacity: 0;
+    margin-left: -100px;
+}
+#link3 {
+    opacity: 0;
+    margin-left: 100px;
+}
+
+.rgbKineticSlider {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+}
+
+.rgbKineticSlider canvas {
+    position: absolute;
+    display: block;
+    top: 0 !important;
+    left: 0 !important;
+    transform: scale(1) !important;
+    pointer-events: all !important;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    position: absolute;
+    top: 50vh;
+    z-index: 1;
+    padding: 9px 27px;
+    font-family: poppins;
+    font-size: 17px;
+    border-bottom: 2px solid #fff;
+    overflow: hidden;
+    transition: .5s;
+}
+
+nav a :hover {
+    color: #fff;
+}
+
+nav a.next {
+    right: -50px;
+}
+
+nav a.prev {
+    left: 30px;
+}
+
+@keyframes animateHeader {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+.iphones{
+    background: linear-gradient(#050505, 70%,#141414);
 }

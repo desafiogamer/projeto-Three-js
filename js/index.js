@@ -20,7 +20,7 @@ function init() {
 
     clock = new THREE.Clock();
 
-    const directLight = new THREE.DirectionalLight(0x1E90FF, 20)
+    const directLight = new THREE.DirectionalLight(0xffffff, 20)
     scene.add(directLight)
     
     const light = new THREE.PointLight(0xffffff, 10, 100);
@@ -39,6 +39,7 @@ function init() {
         gltf.animations.forEach((clip) => {
             mixer.clipAction(clip).play();
         });
+
     });
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -63,6 +64,7 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+
 var container = document.getElementById('inicio')
 
 function animate() {
@@ -73,9 +75,9 @@ function animate() {
 
     if (mixer) mixer.update(delta);
 
-    scene.background = new THREE.Color(0x002142)
-    scene.position.x = 3
-    scene.position.y = -1.1
+    scene.background = new THREE.Color(0x050505)
+    scene.position.x = 5
+    scene.position.y = -1.5
 
     renderer.render(scene, camera);
     container.appendChild(renderer.domElement) 
