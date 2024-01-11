@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
-    <title>three.js webgl - animation - skinning</title>
+    <title>three.js</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="style.css">
@@ -13,43 +13,56 @@
 	<div class="menu">
 		<ul class="icones">
 			<li style="--clr:#ffffff">	
-				<a href="#inicio" id="init">	
+				<a href="#inicio" id="link1" class="ativo">	
 					<i class="bi bi-house-door"></i>
 					<span>Home</span>	
 				</a>		
 			</li>
 			<li style="--clr:#ffffff">
-				<a href="#produtos" id="produ">
-					<i class="bi bi-cpu"></i>
+				<a href="#iphones" id="link3">
+					<i class="bi bi-phone"></i>
 					<span>Produtos</span>
 				</a>
 			</li>
 			<li style="--clr:#ffffff">
-				<a href="#">
+				<a href="#produtos" id="link2">
 					<i class="bi bi-info-circle"></i>
-					<span>Ajuda</span>
+					<span>Sobre</span>
 				</a>
 			</li>
 		</ul>
 	</div>
 
-	<div class="car-shop">
+	<div class="car-shop" onclick="carrinho()">
 		<i class="bi bi-basket"></i>
-		<span class="quantity">00</span>
+		<span class="quantity" id="cart-plus">0</span>
+	</div>
+
+	<div class="icon">
+		<i class="bi bi-apple"></i>
 	</div>
 
 	<section id="inicio">
-		<div class="ilumi-content">
-			<div class="iluminacao"></div>
-		</div>
 		<div class="content">
-			<h1>Olá Mundo.</h1>
-			<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis natus labore nostrum, <br> rem, vero maxime deserunt ipsa eligendi hic repellendus deleniti omnis numquam, quos architecto <br> non magni sed totam eveniet?</p>
+			<h1 id="text1">Apple<span>.</span></h1>
+			<p id="text2">O melhor jeito de comprar o que você ama.</p>
+		</div>
+	</section>
+
+	<section class="iphones" id="iphones">
+		<div id="apple" class="apple"></div>
+		<div class="Comprados">
+			<div id="table-body"></div>
 		</div>
 	</section>
 
 	<section class="produtos" id="produtos">
-
+		<div class="rgbKineticSlider" id="rgbKineticSlider"></div>
+		
+		<nav>
+			<a href="#" class="main-nav prev" data-nav='previous' id="prev"><i class="bi bi-arrow-left"></i></a>
+			<a href="#" class="main-nav next" data-nav='next' id="next"><i class="bi bi-arrow-right"></i></a>
+		</nav>
 	</section>
 
     <script type="importmap">
@@ -60,7 +73,19 @@
 				}
 			}
 	</script>
-    <script src="./js/script.js" type="module"></script>
-	<script src="./js/abas.js"></script>
+	<script src="./js/menu.js"></script>
+    <script src="./js/index.js" type="module"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
+	<script src="./js/gsap_animation.js"></script>
+
+
+	<script src="./js-carrosell/TweenMax.min.js"></script>
+	<script src="./js-carrosell/pixi.min.js"></script>
+	<script src="./js-carrosell/rgbKineticSlider.js"></script>
+	<script src="./js-carrosell/script.js"></script>
+
+	<script src="./js/lista-produtos.js" type="module"></script>
+
 </body>
 </html>

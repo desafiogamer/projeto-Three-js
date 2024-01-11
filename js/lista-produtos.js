@@ -1,0 +1,121 @@
+import{produtos} from './products.js'
+
+function displayItems() {
+    const iphones = document.getElementById('apple')
+
+    const iphonesItems = produtos.filter((item) => item.category == 'iphone');
+
+    iphonesItems.map(item => {
+
+        var itemCard = document.createElement('div');
+        itemCard.setAttribute('id', 'item-card')
+
+        var img = document.createElement('img');
+        img.src = item.img;
+
+        var cardTop = document.createElement('div');
+        cardTop.setAttribute('id', 'card-top');
+
+        var heart = document.createElement('button');
+        heart.setAttribute('class', 'add-to-cart');
+        heart.setAttribute('id', item.id)
+        heart.innerText = 'Comprar'
+
+        cardTop.appendChild(heart);
+
+        var itemName = document.createElement('p');
+        itemName.setAttribute('id', 'item-name');
+        itemName.innerText = item.nome;
+
+        var itemPrice = document.createElement('p');
+        itemPrice.setAttribute('id', 'item-price');
+        itemPrice.innerText = 'A partir de R$ ' + item.price;
+
+        itemCard.appendChild(cardTop);
+        itemCard.appendChild(img);
+        itemCard.appendChild(itemName);
+        itemCard.appendChild(itemPrice);
+
+        iphones.appendChild(itemCard);
+
+    })
+}
+
+displayItems()
+
+document.querySelectorAll('.add-to-cart').forEach(item => {
+    item.addEventListener('click', addToCart)
+})
+
+var cartData = [];
+const testeNomes = [];
+function addToCart() {
+
+    var itemToAdd = this.parentNode.nextSibling.nextSibling.innerText;
+    var itemObj = produtos.find(element => element.nome == itemToAdd);
+
+    var index = cartData.indexOf(itemObj);
+    if (index === -1) {
+        document.getElementById(itemObj.id).classList.add('ativo');
+        document.getElementById(itemObj.id).innerText = 'Adicionado';
+        cartData = [...cartData, itemObj];
+    }
+    else if (index > -1) {
+        alert("Já está adicionado ao carrinho!");
+    }
+
+    document.getElementById('cart-plus').innerText = cartData.length;
+    
+    cartItems();
+}
+
+function cartItems() {
+    var tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = '';
+
+    cartData.map(item => {
+        var tableRow = document.createElement('div');
+        tableRow.setAttribute('class', 'lista')
+
+        var rowData1 = document.createElement('div');
+        var img = document.createElement('img');
+        img.src = item.img;
+        rowData1.appendChild(img);
+
+        var rowData2 = document.createElement('div');
+        rowData2.setAttribute('class', 'listaNome')
+        rowData2.innerText = item.nome;
+
+        var rowData3 = document.createElement('div');
+        rowData3.setAttribute('class', 'btns')
+        var btn1 = document.createElement('button');
+        btn1.setAttribute('class', 'decrease-item');
+        btn1.innerText = '-';
+        var span = document.createElement('span');
+        span.innerText = item.quantity;
+        var btn2 = document.createElement('button');
+        btn2.setAttribute('class', 'increase-item');
+        btn2.innerText = '+';
+
+        rowData3.appendChild(btn1);
+        rowData3.appendChild(span);
+        rowData3.appendChild(btn2);
+
+        var rowData4 = document.createElement('div');
+        rowData4.innerText = item.price + ' R$';
+
+        tableRow.appendChild(rowData1);
+        tableRow.appendChild(rowData2);
+        tableRow.appendChild(rowData3);
+        tableRow.appendChild(rowData4);
+
+        tableBody.appendChild(tableRow);
+    })
+    document.querySelectorAll('.increase-item').forEach(item => {
+        item.addEventListener('click', incrementItem)
+    })
+
+    document.querySelectorAll('.decrease-item').forEach(item => {
+        item.addEventListener('click', decrementItem)
+    })
+}
