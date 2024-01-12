@@ -43,6 +43,32 @@ function displayItems() {
 
 displayItems()
 
+const vegData = [...new Map(produtos.map(item => [item['category'], item])).values()];
+function selectTaste() {
+    var categoryList = document.getElementById('category-list');
+
+    vegData.map(item => {
+        var listCard = document.createElement('div');
+        listCard.setAttribute('class', 'list-card');
+
+        var listImg = document.createElement('img');
+        listImg.src = item.img;
+
+        var listName = document.createElement('a');
+        listName.setAttribute('class', 'list-name');
+        listName.innerText = item.category;
+        listName.setAttribute('href', '#' + item.category)
+
+        listCard.appendChild(listImg);
+        listCard.appendChild(listName);
+
+        var cloneListCard = listCard.cloneNode(true);
+        categoryList.appendChild(listCard);
+        document.querySelector('.category-header').appendChild(cloneListCard)
+    })
+}
+selectTaste();
+
 document.querySelectorAll('.add-to-cart').forEach(item => {
     item.addEventListener('click', addToCart)
 })
@@ -119,3 +145,44 @@ function cartItems() {
         item.addEventListener('click', decrementItem)
     })
 }
+
+function incrementItem() {
+    let itemToInc = this.parentNode.previousSibling.innerText;
+    var incObj = cartData.find(element => element.nome == itemToInc);
+    incObj.quantity += 1;
+
+    currPrice = (incObj.price * incObj.quantity - incObj.price * (incObj.quantity - 1)) / (incObj.quantity - 1);
+    incObj.price = currPrice * incObj.quantity;
+    totalAmount()
+    cartItems();
+}
+
+var currPrice = 0;
+function decrementItem() {
+    let itemToInc = this.parentNode.previousSibling.innerText;
+    let decObj = cartData.find(element => element.nome == itemToInc);
+    let ind = cartData.indexOf(decObj);
+    if (decObj.quantity > 1) {
+        currPrice = (decObj.price * decObj.quantity - decObj.price * (decObj.quantity - 1)) / (decObj.quantity);
+        decObj.quantity -= 1;
+        decObj.price = currPrice * decObj.quantity;
+    }
+    else {
+        document.getElementById(decObj.id).classList.remove('ativo')
+        document.getElementById(decObj.id).innerText = 'Comprar'
+        cartData.splice(ind, 1);
+        document.getElementById('cart-plus').innerText = ' ' + cartData.length;
+    }
+    totalAmount()
+    cartItems()
+}
+
+function totalAmount() {
+    var sum = 0;
+    cartData.map(item => {
+        sum += item.price;
+    })
+    document.getElementById('total-item').innerText = 'Total Item: ' + cartData.length;
+    document.getElementById('total-price').innerText = 'Preço total: ' + sum;
+}
+
