@@ -36,7 +36,7 @@ section {
     display: flex;
     align-items: center;
     height: 100%;
-    z-index: 999;
+    z-index: 889;
 }
 
 .icones {
@@ -73,11 +73,6 @@ section {
     transition: .5s;
 }
 
-.icones li:hover::after {
-    inset: -10px;
-    transform: rotate(0deg);
-}
-
 .icones li a {
     position: relative;
     text-decoration: none;
@@ -104,10 +99,6 @@ section {
     color: #ffffff8a;
 }
 
-.icones li:hover a i {
-    color: white;
-    transform: translateY(-40%);
-}
 
 .icones li a span {
     position: absolute;
@@ -117,10 +108,6 @@ section {
     transform: scale(0) translateY(200%);
 }
 
-.icones li:hover a span {
-    opacity: 1;
-    transform: scale(1) translateY(100%);
-}
 
 #inicio{
     pointer-events: none;
@@ -309,7 +296,7 @@ section {
 }
 
 .Comprados.ativo{
-    width: 500px;
+    width: 600px;
 }
 
 #table-body{
@@ -371,7 +358,7 @@ section {
 .totalItens{
     position: fixed;
     bottom: 0;
-    width: 500px;
+    width: 600px;
     display: flex;
     justify-content: space-between;
     padding: 10px 30px;
@@ -414,6 +401,7 @@ section {
     overflow: hidden;
     width: 100%;
     height: 100vh;
+    z-index: 10;
 }
 
 .rgbKineticSlider canvas {
@@ -445,10 +433,12 @@ nav a :hover {
 
 nav a.next {
     right: -50px;
+    z-index: 40;
 }
 
 nav a.prev {
     left: 30px;
+    z-index: 40;
 }
 
 @keyframes animateHeader {
@@ -639,6 +629,11 @@ nav a.prev {
     .content{
         padding-left: 10px;
         padding-right: 10px;
+        margin: 0;
+    }
+
+    .title{
+        padding-left: 0;
     }
 
     .category-header {
@@ -701,6 +696,78 @@ nav a.prev {
 
     nav a.prev {
         left: -50px;
+    }
+
+    .Comprados.ativo{
+        width: 100%;
+        z-index: 997;
+    }
+
+    .car-shop{
+        top: 30px;
+        z-index: 999;
+    }
+
+    .totalItens{
+        width: 100%;
+    }
+
+    #total-item{
+        font-size: 15px;
+    }
+
+    #total-price{
+        font-size: 15px;
+    }
+
+    .icon{
+        display: none;
+    }
+
+    .item-container{
+        width: 100%;
+    }
+
+    .category-header {
+        padding-left: 10px;
+    }
+
+    .lista{
+        position: relative;
+        width: 100%;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .lista img{
+        height: 70px;
+    }
+
+    .listaNome{
+        text-align: center;
+        margin-left: 40px;
+    }
+
+    .lista .listaNome{
+        text-align: center;
+        margin-left: 40px;
+        font-size: 14px;
+    }
+
+    .btns{
+        margin-top: 5px;
+        margin-left: 40px;
+    }
+
+    .precoItem{
+        margin-top: 10px;
+        margin-left: 15px;
+    }
+
+    #table-body{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        align-items: center;
     }
 }
 
