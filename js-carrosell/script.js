@@ -9,11 +9,11 @@ const images = [
 
 // content setup
 const texts = [
+  ["MacBook ", "Qualidade e performance."],
   ["IPhone ", "Transforme sua visão em uma foto."],
   ["MacBook ", "Qualidade e performance."],
-  ["IPhone ", "Capture os momentos que você deseja."],
   ["IPhone ", "Ilumine seu futuro como este telefone."],
-  ["IPhone ", "Prove do melhor"],
+  ["IPad ", "Prove do melhor"],
 ];
 
 // init plugin
