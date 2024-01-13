@@ -1,9 +1,14 @@
 import{produtos} from './products.js'
 
 function displayItems() {
-    const iphones = document.getElementById('apple')
+    const iphones = document.getElementById('iphone')
+    const ipad = document.getElementById('ipad')
+    const mac = document.getElementById('Mac')
 
     const iphonesItems = produtos.filter((item) => item.category == 'iphone');
+    function formatarValor(valor) {
+        return valor.toLocaleString('pt-BR');
+    }
 
     iphonesItems.map(item => {
 
@@ -29,7 +34,7 @@ function displayItems() {
 
         var itemPrice = document.createElement('p');
         itemPrice.setAttribute('id', 'item-price');
-        itemPrice.innerText = 'A partir de R$ ' + item.price;
+        itemPrice.innerText = 'A partir de R$ ' + formatarValor(item.price);
 
         itemCard.appendChild(cardTop);
         itemCard.appendChild(img);
@@ -39,14 +44,82 @@ function displayItems() {
         iphones.appendChild(itemCard);
 
     })
+
+    const macItens = produtos.filter((item) => item.category == 'Mac');
+    macItens.map(item => {
+        var itemCard = document.createElement('div');
+        itemCard.setAttribute('id', 'item-card')
+
+        var img = document.createElement('img');
+        img.src = item.img;
+
+        var cardTop = document.createElement('div');
+        cardTop.setAttribute('id', 'card-top');
+
+        var heart = document.createElement('button');
+        heart.setAttribute('class', 'add-to-cart');
+        heart.setAttribute('id', item.id)
+        heart.innerText = 'Comprar'
+
+        cardTop.appendChild(heart);
+
+        var itemName = document.createElement('p');
+        itemName.setAttribute('id', 'item-name');
+        itemName.innerText = item.nome;
+
+        var itemPrice = document.createElement('p');
+        itemPrice.setAttribute('id', 'item-price');
+        itemPrice.innerText = 'A partir de R$ ' + formatarValor(item.price);
+
+        itemCard.appendChild(cardTop);
+        itemCard.appendChild(img);
+        itemCard.appendChild(itemName);
+        itemCard.appendChild(itemPrice);
+
+        mac.appendChild(itemCard);
+
+    })
+
+    const ipadItens = produtos.filter((item) => item.category == 'ipad');
+    ipadItens.map(item => {
+        var itemCard = document.createElement('div');
+        itemCard.setAttribute('id', 'item-card')
+
+        var img = document.createElement('img');
+        img.src = item.img;
+
+        var cardTop = document.createElement('div');
+        cardTop.setAttribute('id', 'card-top');
+
+        var heart = document.createElement('button');
+        heart.setAttribute('class', 'add-to-cart');
+        heart.setAttribute('id', item.id)
+        heart.innerText = 'Comprar'
+
+        cardTop.appendChild(heart);
+
+        var itemName = document.createElement('p');
+        itemName.setAttribute('id', 'item-name');
+        itemName.innerText = item.nome;
+
+        var itemPrice = document.createElement('p');
+        itemPrice.setAttribute('id', 'item-price');
+        itemPrice.innerText = 'A partir de R$ ' + formatarValor(item.price);
+
+        itemCard.appendChild(cardTop);
+        itemCard.appendChild(img);
+        itemCard.appendChild(itemName);
+        itemCard.appendChild(itemPrice);
+
+        ipad.appendChild(itemCard);
+
+    })
 }
 
 displayItems()
 
 const vegData = [...new Map(produtos.map(item => [item['category'], item])).values()];
 function selectTaste() {
-    var categoryList = document.getElementById('category-list');
-
     vegData.map(item => {
         var listCard = document.createElement('div');
         listCard.setAttribute('class', 'list-card');
@@ -63,7 +136,6 @@ function selectTaste() {
         listCard.appendChild(listName);
 
         var cloneListCard = listCard.cloneNode(true);
-        categoryList.appendChild(listCard);
         document.querySelector('.category-header').appendChild(cloneListCard)
     })
 }
@@ -90,12 +162,23 @@ function addToCart() {
         alert("Já está adicionado ao carrinho!");
     }
 
-    document.getElementById('cart-plus').innerText = cartData.length;
+    var sum = 0;
+    cartData.map(item => {
+        sum += item.price;
+    })
+    document.getElementById('total-item').innerText = 'Total Item: ' + cartData.length;
+    function formatarValor(valor) {
+        return valor.toLocaleString('pt-BR');
+    }
+    document.getElementById('total-price').innerText = 'Preço total: ' + formatarValor(sum)+' R$';
+
+    document.getElementById('cart-plus').innerText = ' ' + cartData.length;
     
     cartItems();
 }
 
 function cartItems() {
+    const carrin = document.querySelector('.Comprados')
     var tableBody = document.getElementById('table-body');
     tableBody.innerHTML = '';
 
@@ -128,7 +211,7 @@ function cartItems() {
         rowData3.appendChild(btn2);
 
         var rowData4 = document.createElement('div');
-        rowData4.innerText = item.price + ' R$';
+        rowData4.innerText = formatarValor(item.price) + ' R$';
 
         tableRow.appendChild(rowData1);
         tableRow.appendChild(rowData2);
@@ -144,6 +227,10 @@ function cartItems() {
     document.querySelectorAll('.decrease-item').forEach(item => {
         item.addEventListener('click', decrementItem)
     })
+
+    if (cartData.length == 0){
+        carrin.classList.remove('ativo')
+    }
 }
 
 function incrementItem() {
@@ -179,10 +266,15 @@ function decrementItem() {
 
 function totalAmount() {
     var sum = 0;
+    var quantidade = 0
     cartData.map(item => {
         sum += item.price;
-    })
-    document.getElementById('total-item').innerText = 'Total Item: ' + cartData.length;
-    document.getElementById('total-price').innerText = 'Preço total: ' + sum;
-}
+        quantidade += item.quantity
 
+    })
+    function formatarValor(valor) {
+        return valor.toLocaleString('pt-BR');
+    }
+    document.getElementById('total-item').innerText = 'Total Item: ' + quantidade;
+    document.getElementById('total-price').innerText = 'Preço total: ' + formatarValor(sum) + ' R$';
+}

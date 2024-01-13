@@ -22,3 +22,7 @@ window.onscroll = () => {
         }
     });
 }
+
+function formatarValor(valor) {
+    return valor.toLocaleString('pt-BR');
+}
