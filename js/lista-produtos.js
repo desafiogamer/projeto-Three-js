@@ -211,6 +211,7 @@ function cartItems() {
         rowData3.appendChild(btn2);
 
         var rowData4 = document.createElement('div');
+        rowData4.setAttribute('class', 'precoItem')
         rowData4.innerText = formatarValor(item.price) + ' R$';
 
         tableRow.appendChild(rowData1);
