@@ -19,12 +19,12 @@ body{
 
 canvas {
     position: absolute;
-    height: 100dvh;
+    height: auto;
     pointer-events: none;
 }
 
 section {
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 ::-webkit-scrollbar {
@@ -110,7 +110,7 @@ section {
 
 #inicio{
     pointer-events: none;
-    height: 100dvh;
+    height: auto;
 }
 
 .icon{
