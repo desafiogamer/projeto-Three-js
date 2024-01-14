@@ -110,6 +110,7 @@ section {
 
 #inicio{
     pointer-events: none;
+    height: 100dvh;
 }
 
 .icon{
