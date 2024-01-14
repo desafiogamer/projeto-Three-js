@@ -19,7 +19,7 @@ body{
 
 canvas {
     position: absolute;
-    height: 100vh;
+    height: 100dvh;
     pointer-events: none;
 }
 
@@ -190,7 +190,6 @@ section {
     width: 100%;
     display: flex;
     justify-content: center;
-    padding-top: 30px;
     margin-bottom: 10px;
 }
 
@@ -207,6 +206,7 @@ section {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     padding-left: 100px;
+    padding-bottom: 30px;
 }
 
 #item-card {
