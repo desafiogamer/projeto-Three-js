@@ -22,15 +22,6 @@ function init() {
 
     const directLight = new THREE.DirectionalLight(0xffffff, 20)
     scene.add(directLight)
-    
-    const light = new THREE.PointLight(0xffffff, 10, 100);
-    light.position.set(0, 5, 0);
-    scene.add(light);
-
-    const rectLight = new THREE.RectAreaLight(0xffffff, 4, 12, 1.2);
-    rectLight.position.set(0, 6, -2);
-    rectLight.lookAt(0, 5, 5);
-    scene.add(rectLight)
 
     var loader = new GLTFLoader();
     loader.load('./models/robot_playground.glb', function (gltf) {
