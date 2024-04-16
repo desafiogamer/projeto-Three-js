@@ -18,8 +18,8 @@ rgbKineticSlider = new rgbKineticSlider({
   slideImages: images,
   itemsTitles: texts,
 
-  backgroundDisplacementSprite: "https://i.ibb.co/N246LxD/map-9.jpg", // slide displacement image
-  cursorDisplacementSprite: "https://i.ibb.co/KrVr51f/displace-circle.png", // cursor displacement image
+  backgroundDisplacementSprite: "../img/map-9.jpg",
+  cursorDisplacementSprite: "../img/displace-circle.png",
 
   cursorImgEffect: true,
   cursorTextEffect: false,
