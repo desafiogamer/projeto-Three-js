@@ -3,7 +3,7 @@
 <head>
     <title>Apple</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Olá pessoal desenvolvi esse landing page pegando como referencia a apple.">
 	<meta name="author" content="João vitor gentil da silva">
 	<meta name="Keywords" content="apple,Apple,vercel,joao vitor,threejs, three-js,programação,css,html,javascript,python,js,php,acessar,algoritmo,algoritmos,ambiente digital,ambientes virtuais,animações,animações,digitais,aplicativo,avanços tecnológicos">
@@ -11,8 +11,15 @@
 	<link rel="shortcut icon" type="image/jpg" href="./img/logo-apple.png" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+	<!-- os icones nao sao necessarios pro primeiro paint, entao carregam sem bloquear -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
+		media="print" onload="this.media='all'">
+	<noscript>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+	</noscript>
 </head>
 
 <body>
@@ -48,6 +55,7 @@
 		<i class="bi bi-apple"></i>
 	</div>
 
+	<main>
 	<section id="inicio">
 		<div class="content">
 			<span class="hero-badge" id="text0">
@@ -78,17 +86,17 @@
 		</div>
 
 		<div class="title">
-			<h1 class="title">IPhones</h1>
+			<h2 class="title">IPhones</h2>
 		</div>
 		<div id="iphone" class="iphone product-grid"></div>
 
 		<div class="title">
-			<h1 class="title">IPad</h1>
+			<h2 class="title">IPad</h2>
 		</div>
 		<div class="ipad product-grid" id="ipad"></div>
 
 		<div class="title">
-			<h1 class="title">Mac</h1>
+			<h2 class="title">Mac</h2>
 		</div>
 		<div class="Mac product-grid" id="Mac"></div>
 	</section>
@@ -97,10 +105,11 @@
 		<div class="rgbKineticSlider" id="rgbKineticSlider"></div>
 
 		<nav>
-			<a href="#" class="main-nav prev" data-nav='previous' id="prev"><i class="bi bi-arrow-left"></i></a>
-			<a href="#" class="main-nav next" data-nav='next' id="next"><i class="bi bi-arrow-right"></i></a>
+			<a href="#" class="main-nav prev" data-nav='previous' id="prev" aria-label="Slide anterior"><i class="bi bi-arrow-left"></i></a>
+			<a href="#" class="main-nav next" data-nav='next' id="next" aria-label="Proximo slide"><i class="bi bi-arrow-right"></i></a>
 		</nav>
 	</section>
+	</main>
 
 	<div class="cart-overlay" onclick="fecharCarrinho()"></div>
 
@@ -144,19 +153,17 @@
 	</script>
 
 	<!-- cena 3d e interface -->
-	<script src="./js/menu.js"></script>
+	<script src="./js/menu.js" defer></script>
 	<script src="./js/main.js" type="module"></script>
 	<script src="./js/catalogo.js" type="module"></script>
 
 	<!-- animacoes de entrada -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
-	<script src="./js/animacoes.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js" defer></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js" defer></script>
+	<script src="./js/animacoes.js" defer></script>
 
-	<!-- carrossel webgl -->
-	<script src="./vendor/gsap/TweenMax.min.js"></script>
-	<script src="./vendor/pixi/pixi.min.js"></script>
-	<script src="./vendor/rgb-kinetic-slider/rgbKineticSlider.js"></script>
-	<script src="./js/slider.js"></script>
+	<!-- carrossel: as libs (pixi + tweenmax) sao carregadas por este script
+	     quando a secao entra na tela, nao no load da pagina -->
+	<script src="./js/slider.js" defer></script>
 </body>
 </html>

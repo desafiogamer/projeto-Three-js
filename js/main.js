@@ -5,9 +5,21 @@ import { GLTFLoader } from 'three/addons/GLTFLoader.js';
 const container = document.getElementById('inicio');
 
 var camera, scene, renderer, mixer, clock;
+var naTela = true;
 
-init();
-animate();
+if (temWebGL()) {
+    init();
+}
+
+// sem webgl nao adianta montar a cena, so gera erro no console
+function temWebGL() {
+    try {
+        const canvas = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && canvas.getContext('webgl'));
+    } catch (e) {
+        return false;
+    }
+}
 
 function init() {
 
@@ -34,8 +46,9 @@ function init() {
 
     });
 
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+    // acima de 2x o ganho visual nao paga o custo de render
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
@@ -46,6 +59,25 @@ function init() {
     controls.update();
 
     window.addEventListener('resize', onWindowResize, false);
+
+    // renderizar com a secao fora da tela so queima cpu
+    const observador = new IntersectionObserver(([entrada]) => {
+        naTela = entrada.isIntersecting;
+        alternarLoop();
+    });
+    observador.observe(container);
+
+    document.addEventListener('visibilitychange', alternarLoop);
+
+    alternarLoop();
+}
+
+function alternarLoop() {
+    const rodando = naTela && !document.hidden;
+    renderer.setAnimationLoop(rodando ? animate : null);
+
+    // o clock continua contando parado, entao reinicio pra animacao nao pular
+    if (rodando) clock.start();
 }
 
 function onWindowResize() {
@@ -56,8 +88,6 @@ function onWindowResize() {
 }
 
 function animate() {
-
-    requestAnimationFrame(animate);
 
     var delta = clock.getDelta();
 

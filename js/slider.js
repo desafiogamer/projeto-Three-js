@@ -14,7 +14,7 @@ const texts = [
   ["IPad ", "Prove do melhor"],
 ];
 
-rgbKineticSlider = new rgbKineticSlider({
+const config = {
   slideImages: images,
   itemsTitles: texts,
 
@@ -61,4 +61,52 @@ rgbKineticSlider = new rgbKineticSlider({
   textSubTitleLetterspacing: 2,
   textSubTitleOffsetTop: 90,
   mobileTextSubTitleOffsetTop: 90,
-});
+};
+
+// pixi + tweenmax somam ~158 KB que nao fazem falta na abertura da pagina,
+// entao so carregam quando a secao do carrossel esta chegando
+const DEPENDENCIAS = [
+  "vendor/gsap/TweenMax.min.js",
+  "vendor/pixi/pixi.min.js",
+  "vendor/rgb-kinetic-slider/rgbKineticSlider.js",
+];
+
+function carregarScript(src) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = resolve;
+    script.onerror = () => reject(new Error("falhou ao carregar " + src));
+    document.body.appendChild(script);
+  });
+}
+
+function temWebGL() {
+  try {
+    return !!(window.WebGLRenderingContext && document.createElement("canvas").getContext("webgl"));
+  } catch (e) {
+    return false;
+  }
+}
+
+async function iniciarCarrossel() {
+  // a ordem importa: o rgbKineticSlider depende de PIXI e TweenMax no escopo global
+  for (const src of DEPENDENCIAS) {
+    await carregarScript(src);
+  }
+
+  new window.rgbKineticSlider(config);
+}
+
+const secao = document.getElementById("produtos");
+
+if (secao && temWebGL()) {
+  const observador = new IntersectionObserver((entradas, obs) => {
+    if (!entradas[0].isIntersecting) return;
+
+    obs.disconnect();
+    iniciarCarrossel().catch((erro) => console.error(erro));
+  }, { rootMargin: "300px" });
+
+  observador.observe(secao);
+}

@@ -69,6 +69,11 @@ também viraram WebP, de 952 KB pra 250 KB.
 
 Repositório inteiro: 6 MB.
 
+No carregamento: o PixiJS e o TweenMax (158 KB juntos) só entram quando a seção
+do carrossel chega perto da tela, e a cena 3D pausa o loop de render quando sai
+do viewport ou a aba perde o foco — sem isso o `requestAnimationFrame` fica
+queimando CPU a página inteira.
+
 ## Rodando local
 
 Os módulos ES não funcionam abrindo o `index.html` direto no navegador (o
