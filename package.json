@@ -5,6 +5,9 @@
   "description": "Landing page estatica inspirada na Apple, com Three.js e PixiJS.",
   "author": "Joao Vitor Gentil da Silva",
   "license": "MIT",
+  "scripts": {
+    "dev": "npx serve ."
+  },
   "engines": {
     "node": "24.x"
   }
