@@ -74,6 +74,12 @@ do carrossel chega perto da tela, e a cena 3D pausa o loop de render quando sai
 do viewport ou a aba perde o foco — sem isso o `requestAnimationFrame` fica
 queimando CPU a página inteira.
 
+O `main.js` também checa se o navegador tem aceleração por hardware antes de
+importar o Three. Sem GPU o Chrome cai no SwiftShader e cada frame passa a
+custar ~100 ms de CPU, o que trava a página; nesse caso o hero fica com um fundo
+estático e os 263 KB do Three nem chegam a ser baixados. O mesmo vale pra quem
+usa `prefers-reduced-motion`.
+
 ## Rodando local
 
 Os módulos ES não funcionam abrindo o `index.html` direto no navegador (o

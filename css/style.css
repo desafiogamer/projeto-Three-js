@@ -223,6 +223,15 @@ img {
     position: relative;
 }
 
+/* sem gpu a cena 3d nao e montada, entao o hero ganha um fundo proprio
+   no lugar do canvas */
+.sem-3d #inicio {
+    background:
+        radial-gradient(900px 620px at 76% 48%, rgba(94, 92, 230, .26), transparent 64%),
+        radial-gradient(700px 520px at 18% 28%, rgba(10, 132, 255, .18), transparent 60%),
+        #050505;
+}
+
 .content {
     position: absolute;
     display: flex;
