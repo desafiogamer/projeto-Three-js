@@ -1,281 +1,265 @@
-import{produtos} from './products.js'
+import { produtos } from './products.js'
 
-function displayItems() {
-    const iphones = document.getElementById('iphone')
-    const ipad = document.getElementById('ipad')
-    const mac = document.getElementById('Mac')
+const BRL = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+});
 
-    const iphonesItems = produtos.filter((item) => item.category == 'iphone');
-    function formatarValor(valor) {
-        return valor.toLocaleString('pt-BR');
-    }
+const GRIDS = [
+    { id: 'iphone', category: 'iphone' },
+    { id: 'ipad', category: 'ipad' },
+    { id: 'Mac', category: 'Mac' },
+];
 
-    iphonesItems.map(item => {
+/* ---------------------------------------------------------------- catálogo */
 
-        var itemCard = document.createElement('div');
-        itemCard.setAttribute('id', 'item-card')
+function createCard(item) {
+    const card = document.createElement('article');
+    card.className = 'item-card';
+    card.dataset.id = item.id;
 
-        var img = document.createElement('img');
-        img.src = item.img;
+    const media = document.createElement('div');
+    media.className = 'item-media';
 
-        var cardTop = document.createElement('div');
-        cardTop.setAttribute('id', 'card-top');
+    const img = document.createElement('img');
+    img.src = item.img;
+    img.alt = item.nome;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    media.appendChild(img);
 
-        var heart = document.createElement('button');
-        heart.setAttribute('class', 'add-to-cart');
-        heart.setAttribute('id', item.id)
-        heart.innerText = 'Comprar'
+    const tag = document.createElement('span');
+    tag.className = 'item-tag';
+    tag.innerText = item.category;
+    media.appendChild(tag);
 
-        cardTop.appendChild(heart);
+    const body = document.createElement('div');
+    body.className = 'item-body';
 
-        var itemName = document.createElement('p');
-        itemName.setAttribute('id', 'item-name');
-        itemName.innerText = item.nome;
+    const name = document.createElement('h3');
+    name.className = 'item-name';
+    name.innerText = item.nome;
 
-        var itemPrice = document.createElement('p');
-        itemPrice.setAttribute('id', 'item-price');
-        itemPrice.innerText = 'A partir de R$ ' + formatarValor(item.price);
+    const price = document.createElement('p');
+    price.className = 'item-price';
+    price.innerHTML = '<span>A partir de</span>' + BRL.format(item.price);
 
-        itemCard.appendChild(cardTop);
-        itemCard.appendChild(img);
-        itemCard.appendChild(itemName);
-        itemCard.appendChild(itemPrice);
+    const button = document.createElement('button');
+    button.className = 'add-to-cart';
+    button.type = 'button';
+    button.dataset.id = item.id;
+    button.innerHTML = '<i class="bi bi-bag-plus"></i><span>Comprar</span>';
+    button.addEventListener('click', () => addToCart(item.id));
 
-        iphones.appendChild(itemCard);
+    body.appendChild(name);
+    body.appendChild(price);
+    body.appendChild(button);
 
-    })
+    card.appendChild(media);
+    card.appendChild(body);
 
-    const macItens = produtos.filter((item) => item.category == 'Mac');
-    macItens.map(item => {
-        var itemCard = document.createElement('div');
-        itemCard.setAttribute('id', 'item-card')
-
-        var img = document.createElement('img');
-        img.src = item.img;
-
-        var cardTop = document.createElement('div');
-        cardTop.setAttribute('id', 'card-top');
-
-        var heart = document.createElement('button');
-        heart.setAttribute('class', 'add-to-cart');
-        heart.setAttribute('id', item.id)
-        heart.innerText = 'Comprar'
-
-        cardTop.appendChild(heart);
-
-        var itemName = document.createElement('p');
-        itemName.setAttribute('id', 'item-name');
-        itemName.innerText = item.nome;
-
-        var itemPrice = document.createElement('p');
-        itemPrice.setAttribute('id', 'item-price');
-        itemPrice.innerText = 'A partir de R$ ' + formatarValor(item.price);
-
-        itemCard.appendChild(cardTop);
-        itemCard.appendChild(img);
-        itemCard.appendChild(itemName);
-        itemCard.appendChild(itemPrice);
-
-        mac.appendChild(itemCard);
-
-    })
-
-    const ipadItens = produtos.filter((item) => item.category == 'ipad');
-    ipadItens.map(item => {
-        var itemCard = document.createElement('div');
-        itemCard.setAttribute('id', 'item-card')
-
-        var img = document.createElement('img');
-        img.src = item.img;
-
-        var cardTop = document.createElement('div');
-        cardTop.setAttribute('id', 'card-top');
-
-        var heart = document.createElement('button');
-        heart.setAttribute('class', 'add-to-cart');
-        heart.setAttribute('id', item.id)
-        heart.innerText = 'Comprar'
-
-        cardTop.appendChild(heart);
-
-        var itemName = document.createElement('p');
-        itemName.setAttribute('id', 'item-name');
-        itemName.innerText = item.nome;
-
-        var itemPrice = document.createElement('p');
-        itemPrice.setAttribute('id', 'item-price');
-        itemPrice.innerText = 'A partir de R$ ' + formatarValor(item.price);
-
-        itemCard.appendChild(cardTop);
-        itemCard.appendChild(img);
-        itemCard.appendChild(itemName);
-        itemCard.appendChild(itemPrice);
-
-        ipad.appendChild(itemCard);
-
-    })
+    return card;
 }
 
-displayItems()
+function displayItems() {
+    GRIDS.forEach(({ id, category }) => {
+        const grid = document.getElementById(id);
+        if (!grid) return;
 
-const vegData = [...new Map(produtos.map(item => [item['category'], item])).values()];
+        const fragment = document.createDocumentFragment();
+        produtos
+            .filter((item) => item.category === category)
+            .forEach((item) => fragment.appendChild(createCard(item)));
+
+        grid.appendChild(fragment);
+    });
+}
+
 function selectTaste() {
-    vegData.map(item => {
-        var listCard = document.createElement('div');
-        listCard.setAttribute('class', 'list-card');
+    const header = document.querySelector('.category-header');
+    if (!header) return;
 
-        var listImg = document.createElement('img');
+    const categorias = [...new Map(produtos.map((item) => [item.category, item])).values()];
+
+    categorias.forEach((item) => {
+        const listCard = document.createElement('a');
+        listCard.className = 'list-card';
+        listCard.href = '#' + item.category;
+
+        const listImg = document.createElement('img');
         listImg.src = item.img;
+        listImg.alt = item.category;
+        listImg.loading = 'lazy';
 
-        var listName = document.createElement('a');
-        listName.setAttribute('class', 'list-name');
+        const listName = document.createElement('span');
+        listName.className = 'list-name';
         listName.innerText = item.category;
-        listName.setAttribute('href', '#' + item.category)
 
         listCard.appendChild(listImg);
         listCard.appendChild(listName);
-
-        var cloneListCard = listCard.cloneNode(true);
-        document.querySelector('.category-header').appendChild(cloneListCard)
-    })
-}
-selectTaste();
-
-document.querySelectorAll('.add-to-cart').forEach(item => {
-    item.addEventListener('click', addToCart)
-})
-
-var cartData = [];
-const testeNomes = [];
-function addToCart() {
-
-    var itemToAdd = this.parentNode.nextSibling.nextSibling.innerText;
-    var itemObj = produtos.find(element => element.nome == itemToAdd);
-
-    var index = cartData.indexOf(itemObj);
-    if (index === -1) {
-        document.getElementById(itemObj.id).classList.add('ativo');
-        document.getElementById(itemObj.id).innerText = 'Adicionado';
-        cartData = [...cartData, itemObj];
-    }
-    else if (index > -1) {
-        alert("Já está adicionado ao carrinho!");
-    }
-
-    var sum = 0;
-    cartData.map(item => {
-        sum += item.price;
-    })
-    document.getElementById('total-item').innerText = 'Total Item: ' + cartData.length;
-    function formatarValor(valor) {
-        return valor.toLocaleString('pt-BR');
-    }
-    document.getElementById('total-price').innerText = 'Preço total: ' + formatarValor(sum)+' R$';
-
-    document.getElementById('cart-plus').innerText = ' ' + cartData.length;
-    
-    cartItems();
+        header.appendChild(listCard);
+    });
 }
 
-function cartItems() {
-    const carrin = document.querySelector('.Comprados')
-    var tableBody = document.getElementById('table-body');
+/* ---------------------------------------------------------------- carrinho */
+
+let cartData = [];
+
+function findProduct(id) {
+    return produtos.find((item) => String(item.id) === String(id));
+}
+
+function setButtonState(id, added) {
+    const button = document.querySelector('.add-to-cart[data-id="' + id + '"]');
+    if (!button) return;
+
+    button.classList.toggle('ativo', added);
+    button.innerHTML = added
+        ? '<i class="bi bi-check2"></i><span>Adicionado</span>'
+        : '<i class="bi bi-bag-plus"></i><span>Comprar</span>';
+}
+
+function addToCart(id) {
+    const produto = findProduct(id);
+    if (!produto) return;
+
+    const linha = cartData.find((item) => item.id === produto.id);
+
+    if (linha) {
+        linha.quantity += 1;
+    } else {
+        cartData.push({
+            id: produto.id,
+            img: produto.img,
+            nome: produto.nome,
+            unitPrice: produto.price,
+            quantity: 1,
+        });
+        setButtonState(produto.id, true);
+    }
+
+    if (typeof window.abrirCarrinho === 'function') window.abrirCarrinho();
+    renderCart();
+}
+
+function removeFromCart(id) {
+    cartData = cartData.filter((item) => item.id !== id);
+    setButtonState(id, false);
+    renderCart();
+}
+
+function changeQuantity(id, delta) {
+    const linha = cartData.find((item) => item.id === id);
+    if (!linha) return;
+
+    if (linha.quantity + delta <= 0) {
+        removeFromCart(id);
+        return;
+    }
+
+    linha.quantity += delta;
+    renderCart();
+}
+
+function createCartRow(item) {
+    const row = document.createElement('div');
+    row.className = 'lista';
+
+    const thumb = document.createElement('div');
+    thumb.className = 'listaImg';
+    const img = document.createElement('img');
+    img.src = item.img;
+    img.alt = item.nome;
+    thumb.appendChild(img);
+
+    const info = document.createElement('div');
+    info.className = 'listaInfo';
+
+    const nome = document.createElement('p');
+    nome.className = 'listaNome';
+    nome.innerText = item.nome;
+
+    const unitario = document.createElement('p');
+    unitario.className = 'listaUnitario';
+    unitario.innerText = BRL.format(item.unitPrice) + ' / un.';
+
+    const btns = document.createElement('div');
+    btns.className = 'btns';
+
+    const menos = document.createElement('button');
+    menos.className = 'decrease-item';
+    menos.type = 'button';
+    menos.setAttribute('aria-label', 'Diminuir quantidade');
+    menos.innerHTML = '<i class="bi bi-dash"></i>';
+    menos.addEventListener('click', () => changeQuantity(item.id, -1));
+
+    const quantidade = document.createElement('span');
+    quantidade.innerText = item.quantity;
+
+    const mais = document.createElement('button');
+    mais.className = 'increase-item';
+    mais.type = 'button';
+    mais.setAttribute('aria-label', 'Aumentar quantidade');
+    mais.innerHTML = '<i class="bi bi-plus"></i>';
+    mais.addEventListener('click', () => changeQuantity(item.id, 1));
+
+    btns.appendChild(menos);
+    btns.appendChild(quantidade);
+    btns.appendChild(mais);
+
+    info.appendChild(nome);
+    info.appendChild(unitario);
+    info.appendChild(btns);
+
+    const lado = document.createElement('div');
+    lado.className = 'listaLado';
+
+    const preco = document.createElement('p');
+    preco.className = 'precoItem';
+    preco.innerText = BRL.format(item.unitPrice * item.quantity);
+
+    const remover = document.createElement('button');
+    remover.className = 'remove-item';
+    remover.type = 'button';
+    remover.setAttribute('aria-label', 'Remover ' + item.nome);
+    remover.innerHTML = '<i class="bi bi-trash3"></i>';
+    remover.addEventListener('click', () => removeFromCart(item.id));
+
+    lado.appendChild(preco);
+    lado.appendChild(remover);
+
+    row.appendChild(thumb);
+    row.appendChild(info);
+    row.appendChild(lado);
+
+    return row;
+}
+
+function renderCart() {
+    const tableBody = document.getElementById('table-body');
+    const empty = document.getElementById('cart-empty');
+    const badge = document.getElementById('cart-plus');
+    const botaoFinal = document.querySelector('.btnFinal');
+
     tableBody.innerHTML = '';
+    cartData.forEach((item) => tableBody.appendChild(createCartRow(item)));
 
-    cartData.map(item => {
-        var tableRow = document.createElement('div');
-        tableRow.setAttribute('class', 'lista')
+    const quantidade = cartData.reduce((acc, item) => acc + item.quantity, 0);
+    const total = cartData.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
 
-        var rowData1 = document.createElement('div');
-        var img = document.createElement('img');
-        img.src = item.img;
-        rowData1.appendChild(img);
+    if (empty) empty.classList.toggle('ativo', cartData.length === 0);
+    if (botaoFinal) botaoFinal.disabled = cartData.length === 0;
 
-        var rowData2 = document.createElement('div');
-        rowData2.setAttribute('class', 'listaNome')
-        rowData2.innerText = item.nome;
+    badge.innerText = quantidade;
+    badge.classList.toggle('ativo', quantidade > 0);
 
-        var rowData3 = document.createElement('div');
-        rowData3.setAttribute('class', 'btns')
-        var btn1 = document.createElement('button');
-        btn1.setAttribute('class', 'decrease-item');
-        btn1.innerText = '-';
-        var span = document.createElement('span');
-        span.innerText = item.quantity;
-        var btn2 = document.createElement('button');
-        btn2.setAttribute('class', 'increase-item');
-        btn2.innerText = '+';
-
-        rowData3.appendChild(btn1);
-        rowData3.appendChild(span);
-        rowData3.appendChild(btn2);
-
-        var rowData4 = document.createElement('div');
-        rowData4.setAttribute('class', 'precoItem')
-        rowData4.innerText = formatarValor(item.price) + ' R$';
-
-        tableRow.appendChild(rowData1);
-        tableRow.appendChild(rowData2);
-        tableRow.appendChild(rowData3);
-        tableRow.appendChild(rowData4);
-
-        tableBody.appendChild(tableRow);
-    })
-    document.querySelectorAll('.increase-item').forEach(item => {
-        item.addEventListener('click', incrementItem)
-    })
-
-    document.querySelectorAll('.decrease-item').forEach(item => {
-        item.addEventListener('click', decrementItem)
-    })
-
-    if (cartData.length == 0){
-        carrin.classList.remove('ativo')
-    }
+    document.getElementById('total-item').innerText =
+        quantidade === 1 ? '1 item' : quantidade + ' itens';
+    document.getElementById('total-price').innerText = BRL.format(total);
 }
 
-function incrementItem() {
-    let itemToInc = this.parentNode.previousSibling.innerText;
-    var incObj = cartData.find(element => element.nome == itemToInc);
-    incObj.quantity += 1;
-
-    currPrice = (incObj.price * incObj.quantity - incObj.price * (incObj.quantity - 1)) / (incObj.quantity - 1);
-    incObj.price = currPrice * incObj.quantity;
-    totalAmount()
-    cartItems();
-}
-
-var currPrice = 0;
-function decrementItem() {
-    let itemToInc = this.parentNode.previousSibling.innerText;
-    let decObj = cartData.find(element => element.nome == itemToInc);
-    let ind = cartData.indexOf(decObj);
-    if (decObj.quantity > 1) {
-        currPrice = (decObj.price * decObj.quantity - decObj.price * (decObj.quantity - 1)) / (decObj.quantity);
-        decObj.quantity -= 1;
-        decObj.price = currPrice * decObj.quantity;
-    }
-    else {
-        document.getElementById(decObj.id).classList.remove('ativo')
-        document.getElementById(decObj.id).innerText = 'Comprar'
-        cartData.splice(ind, 1);
-        document.getElementById('cart-plus').innerText = ' ' + cartData.length;
-    }
-    totalAmount()
-    cartItems()
-}
-
-function totalAmount() {
-    var sum = 0;
-    var quantidade = 0
-    cartData.map(item => {
-        sum += item.price;
-        quantidade += item.quantity
-
-    })
-    function formatarValor(valor) {
-        return valor.toLocaleString('pt-BR');
-    }
-    document.getElementById('total-item').innerText = 'Total Item: ' + quantidade;
-    document.getElementById('total-price').innerText = 'Preço total: ' + formatarValor(sum) + ' R$';
-}
+displayItems();
+selectTaste();
+renderCart();
