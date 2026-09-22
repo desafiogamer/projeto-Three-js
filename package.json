@@ -1,0 +1,11 @@
+{
+  "name": "projeto-three-js",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page estatica inspirada na Apple, com Three.js e PixiJS.",
+  "author": "Joao Vitor Gentil da Silva",
+  "license": "MIT",
+  "engines": {
+    "node": "24.x"
+  }
+}
