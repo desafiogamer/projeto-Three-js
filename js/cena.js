@@ -2,13 +2,8 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/GLTFLoader.js';
 
-// 30 fps dao conta de uma animacao de fundo e custam metade do render
-const FPS = 30;
-const INTERVALO = 1 / FPS;
-
 let camera, scene, renderer, mixer, clock;
 let naTela = true;
-let acumulado = 0;
 
 export function montarCena(container) {
 
@@ -35,8 +30,9 @@ export function montarCena(container) {
     });
 
     renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-    // acima de 2x o ganho visual nao paga o custo de render
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // em tela hidpi o dpr cheio quadruplica os pixels desenhados e derruba o
+    // fps; 1.5x mantem a cena nitida por bem menos custo
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
@@ -79,11 +75,7 @@ function animate() {
 
     const delta = clock.getDelta();
 
-    acumulado += delta;
-    if (acumulado < INTERVALO) return;
-
-    if (mixer) mixer.update(acumulado);
-    acumulado = 0;
+    if (mixer) mixer.update(delta);
 
     renderer.render(scene, camera);
 

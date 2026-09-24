@@ -179,7 +179,13 @@ img {
     border-radius: 50%;
     box-shadow: 0 10px 30px rgba(0, 0, 0, .6);
     cursor: pointer;
-    transition: transform .3s var(--ease), background .3s;
+    transition: transform .3s var(--ease), background .3s, opacity .3s;
+}
+
+/* com o painel aberto a sacola ficaria por cima do botao de fechar */
+body.no-scroll .car-shop {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .car-shop:hover {
